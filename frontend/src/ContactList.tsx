@@ -7,7 +7,13 @@ interface Contact {
     email: string;
 }
 
-function ContactList({ contacts }: { contacts: Contact[] }) {
+interface ContactListProps {
+    contacts: Contact[];
+    updateContact: (contact: Contact) => void;
+    updateCallback: () => void;
+}
+
+function ContactList({ contacts, updateContact, updateCallback }: ContactListProps) {
   return (
     <>
         <div>
@@ -28,7 +34,7 @@ function ContactList({ contacts }: { contacts: Contact[] }) {
                             <td>{contact.lastName}</td>
                             <td>{contact.email}</td>
                             <td>
-                                <button>Update</button>
+                                <button onClick={() => updateContact(contact)}>Update</button>
                                 <button>Delete</button>
                             </td>
                         </tr>
