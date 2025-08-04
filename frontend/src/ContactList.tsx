@@ -14,6 +14,25 @@ interface ContactListProps {
 }
 
 function ContactList({ contacts, updateContact, updateCallback }: ContactListProps) {
+    const onDelete = async (id: number | string) => {
+        try {
+            const options = {
+                method: "DELETE"
+
+            }
+            const response = await fetch(`http://127.0.0.1:5000/delete_contact/${id}`, options)
+            if(response.status === 200){
+                updateCallback()
+            }
+            else{
+                console.error("Failed to Delete.")
+            }
+        }
+        catch (error) {
+            alert(error)
+        }
+    }
+
   return (
     <>
         <div>
@@ -35,7 +54,7 @@ function ContactList({ contacts, updateContact, updateCallback }: ContactListPro
                             <td>{contact.email}</td>
                             <td>
                                 <button onClick={() => updateContact(contact)}>Update</button>
-                                <button>Delete</button>
+                                <button onClick={() => onDelete(contact.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
